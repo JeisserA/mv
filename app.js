@@ -426,14 +426,33 @@ let proposalWired = false;
   const noBtn = document.getElementById("btn-no");
   const scene = document.querySelector(".proposal-buttons");
 
-  function moveRandom(el) {
-  const margin = 20; // para que no quede pegado al borde
-  const elRect = el.getBoundingClientRect();
-  const maxX = window.innerWidth - elRect.width - margin * 2;
-  const maxY = window.innerHeight - elRect.height - margin * 2;
+ let lastZoneIndex = -1;
 
-  const x = margin + Math.random() * maxX;
-  const y = margin + Math.random() * maxY;
+function moveRandom(el) {
+  const margin = 16;
+  const elRect = el.getBoundingClientRect();
+  const w = window.innerWidth - elRect.width - margin * 2;
+  const h = window.innerHeight - elRect.height - margin * 2;
+
+  // zonas como fracción del ancho/alto de pantalla: [x%, y%]
+  const zones = [
+    [0.06, 0.10], [0.94, 0.10],   // arriba: izquierda / derecha
+    [0.06, 0.88], [0.94, 0.88],   // abajo: izquierda / derecha
+    [0.50, 0.06],                  // arriba centro
+    [0.50, 0.90],                  // abajo centro
+    [0.06, 0.50], [0.94, 0.50],   // lados, a media altura
+  ];
+
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * zones.length);
+  } while (idx === lastZoneIndex);
+  lastZoneIndex = idx;
+
+  const [fx, fy] = zones[idx];
+  const jitter = 0.04; // pequeña variación para que no caiga siempre en el mismo pixel exacto
+  const x = margin + Math.max(0, Math.min(1, fx + (Math.random() - 0.5) * jitter)) * w;
+  const y = margin + Math.max(0, Math.min(1, fy + (Math.random() - 0.5) * jitter)) * h;
 
   el.style.position = "fixed";
   el.style.left = x + "px";
