@@ -7,6 +7,13 @@ const FILES_TO_CACHE = [
   "./icon-192.png",
   "./icon-512.png",
   "./cancion.mp3",
+  "./musica-juego.mp3",
+  "./no-sonido.mp3",
+  "./si-1.mp3",
+  "./si-2.mp3",
+  "./si-3.mp3",
+  "./si-4.mp3",
+  "./si-5.mp3",
 ];
 
 self.addEventListener("install", (event) => {

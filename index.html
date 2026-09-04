@@ -372,6 +372,11 @@ body{
   margin:0 0 12px; text-shadow:0 0 30px rgba(216,27,114,.7);
 }
 .final-note{ font-size:1rem; color:#EAD1E3; max-width:32ch; line-height:1.5; }
+.final-note-emphasis{
+  margin-top:14px;
+  font-weight:700;
+  color:#fff;
+}
 
 #confetti-canvas{
   position:fixed; inset:0; pointer-events:none; z-index:50;
@@ -455,7 +460,8 @@ body{
   <section id="screen-final" class="screen">
     <div>
       <p class="final-yes" id="final-yes">¡Sí! 💕</p>
-      <p class="final-note">Gracias pero los botones de un juego no cuentan en la vida real. Voy camino a tu casa para hacerlo oficial en persona. ¡No me tardo linda!</p>
+      <p class="final-note">Gracias pero los botones de un juego no cuentan en la vida real. Voy camino a tu casa para hacerlo oficial en persona.</p>
+      <p class="final-note final-note-emphasis"> ¡No me tardo linda!</p>
       <input type="range" id="volume-slider-final" class="volume-slider" min="0" max="100" value="70">
     </div>
   </section>

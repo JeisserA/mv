@@ -102,17 +102,29 @@
   setVolume: (v) => { masterVolume = v; },    };
   })();
 
- document.getElementById("volume-slider").addEventListener("input", (e) => {
-    const v = e.target.value / 100;
-    Audio_.setVolume(v);
-    const bgm = document.getElementById("bgm");
-    if (bgm) bgm.volume = v;
-  });
-  document.getElementById("volume-slider-final").addEventListener("input", (e) => {
-  const v = e.target.value / 100;
+function syncAllVolumes(v) {
   Audio_.setVolume(v);
   const bgm = document.getElementById("bgm");
   if (bgm) bgm.volume = v;
+  const bgmJuego = document.getElementById("bgm-juego");
+  if (bgmJuego) bgmJuego.volume = v;
+  const audioNo = document.getElementById("audio-no");
+  if (audioNo) audioNo.volume = v;
+  for (let i = 1; i <= 5; i++) {
+    const a = document.getElementById(`audio-si-${i}`);
+    if (a) a.volume = v;
+  }
+}
+
+document.getElementById("volume-slider").addEventListener("input", (e) => {
+  const v = e.target.value / 100;
+  syncAllVolumes(v);
+  document.getElementById("volume-slider-final").value = e.target.value;
+});
+
+document.getElementById("volume-slider-final").addEventListener("input", (e) => {
+  const v = e.target.value / 100;
+  syncAllVolumes(v);
   document.getElementById("volume-slider").value = e.target.value;
 });
   /* ------------------------------------------------------------------ *
@@ -429,19 +441,24 @@ let proposalWired = false;
   el.style.margin = "0";
 }
 
-  noBtn.addEventListener("click", () => moveRandom(noBtn));
+ noBtn.addEventListener("click", () => {
+  moveRandom(noBtn);
+  document.getElementById("audio-no").play().catch(() => {});
+});
 
-  let yesMoves = 0;
-  yesBtn.addEventListener("click", () => {
-    if (yesMoves < 5) {
-      moveRandom(yesBtn);
-      yesMoves++;
-      return;
-    }
-    document.getElementById("bgm").play().catch(() => {});
-    showScreen("screen-final");
-    burstConfetti();
-  });
+let yesMoves = 0;
+yesBtn.addEventListener("click", () => {
+  if (yesMoves < 5) {
+    document.getElementById(`audio-si-${yesMoves + 1}`).play().catch(() => {});
+    moveRandom(yesBtn);
+    yesMoves++;
+    return;
+  }
+  document.getElementById("bgm").play().catch(() => {});
+  showScreen("screen-final");
+  burstConfetti();
+});
+
 }
 
   /* ------------------------------------------------------------------ *
