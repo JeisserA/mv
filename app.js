@@ -400,6 +400,7 @@
    * Proposal scene: simple Sí / No buttons
    * ------------------------------------------------------------------ */
   function startProposalSequence() {
+    document.getElementById("bgm-juego").pause();
     setTimeout(() => {
       showScreen("screen-proposal");
       wireProposalButtons();
@@ -493,6 +494,7 @@ let proposalWired = false;
   document.getElementById("btn-play").addEventListener("click", () => {
     showScreen("screen-game");
     showPista(0);
+    document.getElementById("bgm-juego").play().catch(() => {});
   });
 
   window.addEventListener("resize", () => {
